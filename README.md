@@ -17,7 +17,7 @@ This Java library contains classes that allows you to do payments and call other
 - [x] Method: operation-history
 - [x] Method: operation-details
 - [x] Method: request-payment
-- [ ] Method: process-payment
+- [x] Method: process-payment
 - [ ] Showcase Search
 - [ ] Showcase Request
 - [ ] Showcase Validate
