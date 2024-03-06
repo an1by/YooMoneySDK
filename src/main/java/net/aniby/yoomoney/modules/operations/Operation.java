@@ -1,4 +1,4 @@
-package net.aniby.yoomoney.modules.operation;
+package net.aniby.yoomoney.modules.operations;
 
 import com.google.gson.annotations.SerializedName;
 import lombok.AllArgsConstructor;

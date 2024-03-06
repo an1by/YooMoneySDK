@@ -1,4 +1,4 @@
-package net.aniby.yoomoney.modules.notification;
+package net.aniby.yoomoney.modules.notifications;
 
 import com.google.gson.annotations.SerializedName;
 import lombok.AllArgsConstructor;

@@ -1,14 +1,16 @@
-package net.aniby.yoomoney.modules.operation;
+package net.aniby.yoomoney.modules.operations;
 
 import com.google.gson.JsonObject;
 import com.google.gson.annotations.SerializedName;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
+@Getter
 public class OperationDetails {
     @SerializedName("error")
     private String error;

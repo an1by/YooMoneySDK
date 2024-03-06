@@ -6,18 +6,18 @@ import lombok.Getter;
 @Builder
 @Getter
 public class OperationHistoryRequest extends MethodRequest {
-    @BodyRequestField(name = "type")
+    @BodyRequestField("type")
     private String type;
-    @BodyRequestField(name = "label")
+    @BodyRequestField("label")
     private String label;
-    @BodyRequestField(name = "from")
+    @BodyRequestField("from")
     private String from;
-    @BodyRequestField(name = "till")
+    @BodyRequestField("till")
     private String till;
-    @BodyRequestField(name = "start_record")
+    @BodyRequestField("start_record")
     private int startRecord;
-    @BodyRequestField(name = "records")
+    @BodyRequestField("records")
     private int records;
-    @BodyRequestField(name = "details")
+    @BodyRequestField("details")
     private boolean details;
 }

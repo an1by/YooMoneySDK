@@ -1,4 +1,4 @@
-package net.aniby.yoomoney.modules.operation;
+package net.aniby.yoomoney.modules.operations;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;

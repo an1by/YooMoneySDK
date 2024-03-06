@@ -3,9 +3,14 @@ package net.aniby.yoomoney.client;
 import com.google.gson.Gson;
 import lombok.Getter;
 import net.aniby.yoomoney.modules.account.AccountInfo;
-import net.aniby.yoomoney.modules.operation.OperationDetails;
-import net.aniby.yoomoney.modules.operation.OperationHistory;
+import net.aniby.yoomoney.modules.operations.OperationDetails;
+import net.aniby.yoomoney.modules.operations.OperationHistory;
+import net.aniby.yoomoney.modules.payments.ProcessedPayment;
+import net.aniby.yoomoney.modules.payments.RequestedPayment;
 import net.aniby.yoomoney.requests.OperationHistoryRequest;
+import net.aniby.yoomoney.requests.P2PPaymentRequest;
+import net.aniby.yoomoney.requests.ProcessPaymentRequest;
+import net.aniby.yoomoney.requests.ShopPaymentRequest;
 import net.aniby.yoomoney.utils.Constant;
 import okhttp3.*;
 
@@ -64,6 +69,21 @@ public class YooMoneyClient {
                     .add("operation_id", operationId)
                     .build();
             return request(formBody, Constant.Host.OPERATION_DETAILS, OperationDetails.class);
+        }
+
+        public RequestedPayment requestShopPayment(ShopPaymentRequest paymentRequest) throws IOException {
+            RequestBody formBody = paymentRequest.build();
+            return request(formBody, Constant.Host.REQUEST_PAYMENT, RequestedPayment.class);
+        }
+
+        public RequestedPayment requestP2PPayment(P2PPaymentRequest paymentRequest) throws IOException {
+            RequestBody formBody = paymentRequest.build();
+            return request(formBody, Constant.Host.REQUEST_PAYMENT, RequestedPayment.class);
+        }
+
+        public ProcessedPayment processPayment(ProcessPaymentRequest paymentRequest) throws IOException {
+            RequestBody formBody = paymentRequest.build();
+            return request(formBody, Constant.Host.PROCESS_PAYMENT, ProcessedPayment.class);
         }
     }
 }
