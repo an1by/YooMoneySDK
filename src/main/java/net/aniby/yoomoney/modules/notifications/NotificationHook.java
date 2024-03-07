@@ -47,7 +47,7 @@ public class NotificationHook implements HttpHandler {
             return;
         }
         Map<String, String> body = list.stream()
-                .map(s -> s.split("=", 1))
+                .map(s -> s.split("=", 2))
                 .filter(e -> e.length == 2)
                 .collect(Collectors.toMap(
                 e -> e[0], e -> e[1]
