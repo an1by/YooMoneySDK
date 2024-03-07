@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.Objects;
 
 public class MethodRequest {
-    public RequestBody build() {
+    public RequestBody buildRequest() {
         FormBody.Builder builder = new FormBody.Builder();
 
         Field[] fields = this.getClass().getDeclaredFields();
@@ -20,10 +20,12 @@ public class MethodRequest {
                 String name = requestField.value();
                 try {
                     Object value = field.get(this);
-                    if (Objects.equals("formObjectMap", name)) {
-                        ((HashMap<String, String>) value).forEach(builder::add);
-                    } else {
-                        builder.add(name, String.valueOf(value));
+                    if (value !=  null) {
+                        if (Objects.equals("formObjectMap", name)) {
+                            ((HashMap<String, String>) value).forEach(builder::add);
+                        } else {
+                            builder.add(name, String.valueOf(value));
+                        }
                     }
                 } catch (IllegalArgumentException | IllegalAccessException e) {
                     e.printStackTrace();

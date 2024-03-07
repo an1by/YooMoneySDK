@@ -9,6 +9,6 @@ public class Constant {
         public static final String OPERATION_DETAILS = "https://yoomoney.ru/api/operation-details";
         public static final String REQUEST_PAYMENT = "https://yoomoney.ru/api/request-payment";
         public static final String PROCESS_PAYMENT = "https://yoomoney.ru/api/process-payment";
-        public static final String SEND_PAYMENT = "https://yoomoney.ru/quickpay/confirm.xml";
+        public static final String QUICKPAY_CONFIRM = "https://yoomoney.ru/quickpay/confirm";
     }
 }

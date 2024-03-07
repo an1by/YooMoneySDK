@@ -3,6 +3,7 @@ package net.aniby.yoomoney.client;
 import com.google.gson.Gson;
 import lombok.Getter;
 import net.aniby.yoomoney.modules.account.AccountInfo;
+import net.aniby.yoomoney.modules.forms.QuickPay;
 import net.aniby.yoomoney.modules.operations.OperationDetails;
 import net.aniby.yoomoney.modules.operations.OperationHistory;
 import net.aniby.yoomoney.modules.payments.ProcessedPayment;
@@ -60,7 +61,7 @@ public class YooMoneyClient {
         }
 
         public OperationHistory getOperationHistory(OperationHistoryRequest methodRequest) throws IOException {
-            RequestBody formBody = methodRequest.build();
+            RequestBody formBody = methodRequest.buildRequest();
             return request(formBody, Constant.Host.OPERATION_HISTORY, OperationHistory.class);
         }
 
@@ -72,18 +73,43 @@ public class YooMoneyClient {
         }
 
         public RequestedPayment requestShopPayment(ShopPaymentRequest paymentRequest) throws IOException {
-            RequestBody formBody = paymentRequest.build();
+            RequestBody formBody = paymentRequest.buildRequest();
             return request(formBody, Constant.Host.REQUEST_PAYMENT, RequestedPayment.class);
         }
 
         public RequestedPayment requestP2PPayment(P2PPaymentRequest paymentRequest) throws IOException {
-            RequestBody formBody = paymentRequest.build();
+            RequestBody formBody = paymentRequest.buildRequest();
             return request(formBody, Constant.Host.REQUEST_PAYMENT, RequestedPayment.class);
         }
 
         public ProcessedPayment processPayment(ProcessPaymentRequest paymentRequest) throws IOException {
-            RequestBody formBody = paymentRequest.build();
+            RequestBody formBody = paymentRequest.buildRequest();
             return request(formBody, Constant.Host.PROCESS_PAYMENT, ProcessedPayment.class);
+        }
+
+        public String createQuickPayForm(double amount, String paymentType, String label, String successURL) throws IOException {
+            AccountInfo info = this.getAccountInfo();
+            if (info == null)
+                return null;
+            return QuickPay.builder()
+                    .receiver(info.getAccount())
+                    .paymentType(paymentType)
+                    .amount(amount)
+                    .label(label)
+                    .successURL(successURL)
+                    .build().create(client);
+        }
+
+        public String createQuickPayForm(double amount, String paymentType, String label) throws IOException {
+            return createQuickPayForm(amount, paymentType, label, null);
+        }
+
+        public String createQuickPayForm(double amount, String paymentType) throws IOException {
+            return createQuickPayForm(amount, paymentType, null, null);
+        }
+
+        public String createQuickPayForm(double amount) throws IOException {
+            return createQuickPayForm(amount, "AC", null, null);
         }
     }
 }
