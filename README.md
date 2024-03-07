@@ -19,7 +19,7 @@ This Java library contains classes that allows you to do payments and call other
 - [x] Method: operation-details
 - [x] Method: request-payment
 - [x] Method: process-payment
-- [x] Forms
+- [x] QuickPay Forms
 - [ ] Showcase Search
 - [ ] Showcase Request
 - [ ] Showcase Validate
