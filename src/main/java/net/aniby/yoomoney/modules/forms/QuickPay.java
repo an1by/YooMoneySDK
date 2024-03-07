@@ -12,6 +12,7 @@ import okhttp3.ResponseBody;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.IOException;
+import java.util.List;
 
 @Getter
 @Builder
@@ -21,7 +22,7 @@ public class QuickPay extends MethodRequest {
     @BodyRequestField("quickpay-form")
     private final String quickPayForm = "button";
     @BodyRequestField("paymentType")
-    private final String paymentType; // PC / AC
+    private final List<String> paymentTypes; // PC / AC
     @BodyRequestField("sum")
     private final double amount;
     @BodyRequestField("label")

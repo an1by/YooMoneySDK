@@ -17,6 +17,7 @@ import okhttp3.*;
 
 import java.io.IOException;
 import java.net.Proxy;
+import java.util.List;
 
 public class YooMoneyClient {
     private String accessToken = null;
@@ -86,28 +87,34 @@ public class YooMoneyClient {
         return request(formBody, Constant.Host.PROCESS_PAYMENT, ProcessedPayment.class);
     }
 
-    public String createQuickPayForm(double amount, String paymentType, String label, String successURL) throws IOException {
+    public String createQuickPayForm(double amount, List<String> paymentTypes, String label, String successURL) throws IOException {
         AccountInfo info = this.getAccountInfo();
         if (info == null)
             return null;
         return QuickPay.builder()
                 .receiver(info.getAccount())
-                .paymentType(paymentType)
+                .paymentTypes(paymentTypes)
                 .amount(amount)
                 .label(label)
                 .successURL(successURL)
                 .build().create(client);
     }
 
-    public String createQuickPayForm(double amount, String paymentType, String label) throws IOException {
-        return createQuickPayForm(amount, paymentType, label, null);
+    public String createQuickPayForm(double amount, String label, String successURL) throws IOException {
+        return createQuickPayForm(amount, List.of("AC", "PC"), label, successURL);
+    }
+    public String createQuickPayForm(double amount, String label) throws IOException {
+        return createQuickPayForm(amount, List.of("AC", "PC"), label, null);
+    }
+    public String createQuickPayForm(double amount, List<String> paymentTypes, String label) throws IOException {
+        return createQuickPayForm(amount, paymentTypes, label, null);
     }
 
-    public String createQuickPayForm(double amount, String paymentType) throws IOException {
-        return createQuickPayForm(amount, paymentType, null, null);
+    public String createQuickPayForm(double amount, List<String> paymentTypes) throws IOException {
+        return createQuickPayForm(amount, paymentTypes, null, null);
     }
 
     public String createQuickPayForm(double amount) throws IOException {
-        return createQuickPayForm(amount, "AC", null, null);
+        return createQuickPayForm(amount, List.of("AC", "PC"), null, null);
     }
 }

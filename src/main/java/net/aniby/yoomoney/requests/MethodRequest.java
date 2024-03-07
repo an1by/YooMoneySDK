@@ -5,6 +5,7 @@ import okhttp3.RequestBody;
 
 import java.lang.reflect.Field;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Objects;
 
 public class MethodRequest {
@@ -23,7 +24,11 @@ public class MethodRequest {
                     if (value !=  null) {
                         if (Objects.equals("formObjectMap", name)) {
                             ((HashMap<String, String>) value).forEach(builder::add);
-                        } else {
+                        } else if (value instanceof List<?> list) {
+                            list.forEach(v -> builder.add(
+                                    name, String.valueOf(v)
+                            ));
+                        }else {
                             builder.add(name, String.valueOf(value));
                         }
                     }
