@@ -1,8 +1,9 @@
 #  YooMoney SDK (Java)
-## !!! WARNING !!!
-This is a work in progress and <b>not tested</b> library.\
-It will be released when all 'TO DO' is completed.\
-\
+
+> [!WARNING]
+> This is a work in progress and <b>not tested</b> library.\
+> It will be released when all 'TO DO' is completed.
+
 You can help me if you test and write an [issue](https://github.com/an1by/YooMoneySDK/issues) about some feature.\
 Please use English or Russian when writing it.
 
@@ -12,7 +13,7 @@ This Java library contains classes that allows you to do payments and call other
 
 ## TO DO:
 - [ ] Authorization (Access token get/revoke)
-- [ ] Notification hook
+- [x] Notification hook
 - [x] Method: account-info
 - [x] Method: operation-history
 - [x] Method: operation-details

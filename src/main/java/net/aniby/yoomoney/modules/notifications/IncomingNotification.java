@@ -1,42 +1,80 @@
 package net.aniby.yoomoney.modules.notifications;
 
-import com.google.gson.annotations.SerializedName;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.apache.commons.codec.digest.DigestUtils;
 
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.lang.reflect.Field;
+import java.nio.charset.StandardCharsets;
+import java.util.Map;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
 public class IncomingNotification {
     // HTTP / HTTPS
-    @SerializedName("notification_type")
+    @NotificationField("notification_type")
     private String notificationType;
-    @SerializedName("operation_id")
+    @NotificationField("operation_id")
     private String operationId;
-    @SerializedName("amount")
+    @NotificationField("amount")
     private double amount;
-    @SerializedName("withdraw_amount")
+    @NotificationField("withdraw_amount")
     private double withdrawAmount;
-    @SerializedName("currency")
+    @NotificationField("currency")
     private String currency;
-    @SerializedName("datetime")
+    @NotificationField("datetime")
     private String datetime;
-    @SerializedName("sender")
+    @NotificationField("sender")
     private String sender;
-    @SerializedName("codepro")
+    @NotificationField("codepro")
     private boolean codePro;
-    @SerializedName("label")
+    @NotificationField("label")
     private String label;
-    @SerializedName("sha1_hash")
+    @NotificationField("sha1_hash")
     private String sha1Hash;
-    @SerializedName("test_notification")
+    @NotificationField("test_notification")
     private boolean testNotification;
-    @SerializedName("unaccepted")
+    @NotificationField("unaccepted")
     private boolean unaccepted;
+
+    // Only HTTPS
+    @NotificationField("lastname")
+    public String lastName;
+    @NotificationField("firstname")
+    public String firstName;
+    @NotificationField("fathersname")
+    public String fathersName;
+
+    @NotificationField("email")
+    public String email;
+
+    @NotificationField("phone")
+    public String phone;
+
+    @NotificationField("city")
+    public String city;
+    @NotificationField("street")
+    public String street;
+    @NotificationField("building")
+    public String building;
+    @NotificationField("suite")
+    public String suite;
+    @NotificationField("flat")
+    public String flat;
+    @NotificationField("zip")
+    public String zip;
+
+    public boolean isSecured() {
+        return lastName != null || email != null || phone != null || city != null;
+    }
 
     public boolean verify(String notificationSecret) {
         String string = String.format(
@@ -44,5 +82,20 @@ public class IncomingNotification {
                 notificationType, operationId, amount, currency, datetime, sender, codePro, notificationSecret, label
         );
         return Objects.equals(sha1Hash, DigestUtils.sha1Hex(string));
+    }
+
+    public static IncomingNotification get(Map<String, String> map) throws IllegalAccessException {
+        IncomingNotification notification = new IncomingNotification();
+
+        Field[] fields = notification.getClass().getDeclaredFields();
+        for (Field field : fields) {
+            if (field.isAnnotationPresent(NotificationField.class)) {
+                field.setAccessible(true);
+                String name = field.getAnnotation(NotificationField.class).value();
+                field.set(notification, map.get(name));
+            }
+        }
+
+        return notification;
     }
 }
