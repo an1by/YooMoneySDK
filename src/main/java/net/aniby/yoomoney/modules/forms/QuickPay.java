@@ -32,6 +32,7 @@ public class QuickPay extends MethodRequest {
 
     public @Nullable String create(OkHttpClient client) throws IOException {
         Request request = new Request.Builder()
+                .header("Content-Type", "application/x-www-form-urlencoded")
                 .url(Constant.Host.QUICKPAY_CONFIRM)
                 .post(this.buildRequest())
                 .build();
@@ -42,6 +43,10 @@ public class QuickPay extends MethodRequest {
             return null;
         }
         ResponseBody body = response.body();
-        return body == null ? null : body.string();
+        response.close();
+        if (body == null)
+            return null;
+        String uri = response.toString();
+        return uri.substring(uri.indexOf("url=") + 4, uri.length() - 1);
     }
 }
