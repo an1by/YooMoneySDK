@@ -54,6 +54,7 @@ public class YooMoneyClient {
         if (responseBody == null)
             return null;
         String body = responseBody.string();
+
         T info = new Gson().fromJson(body, tClass);
         response.close();
         return info;

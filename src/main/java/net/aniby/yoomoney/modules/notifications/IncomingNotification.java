@@ -1,23 +1,19 @@
 package net.aniby.yoomoney.modules.notifications;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.apache.commons.codec.digest.DigestUtils;
 
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.lang.reflect.Field;
-import java.nio.charset.StandardCharsets;
 import java.util.Map;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
 public class IncomingNotification {
     // HTTP / HTTPS
     @NotificationField("notification_type")
@@ -35,42 +31,42 @@ public class IncomingNotification {
     @NotificationField("sender")
     private String sender;
     @NotificationField("codepro")
-    private boolean codePro;
+    private boolean codePro = false;
     @NotificationField("label")
-    private String label;
+    private String label = "";
     @NotificationField("sha1_hash")
     private String sha1Hash;
     @NotificationField("test_notification")
-    private boolean testNotification;
+    private boolean testNotification = false;
     @NotificationField("unaccepted")
-    private boolean unaccepted;
+    private boolean unaccepted = false;
 
     // Only HTTPS
     @NotificationField("lastname")
-    public String lastName;
+    public String lastName = null;
     @NotificationField("firstname")
-    public String firstName;
+    public String firstName = null;
     @NotificationField("fathersname")
-    public String fathersName;
+    public String fathersName = null;
 
     @NotificationField("email")
-    public String email;
+    public String email = null;
 
     @NotificationField("phone")
-    public String phone;
+    public String phone = null;
 
     @NotificationField("city")
-    public String city;
+    public String city = null;
     @NotificationField("street")
-    public String street;
+    public String street = null;
     @NotificationField("building")
-    public String building;
+    public String building = null;
     @NotificationField("suite")
-    public String suite;
+    public String suite = null;
     @NotificationField("flat")
-    public String flat;
+    public String flat = null;
     @NotificationField("zip")
-    public String zip;
+    public String zip = null;
 
     public boolean isSecured() {
         return lastName != null || email != null || phone != null || city != null;
@@ -92,7 +88,9 @@ public class IncomingNotification {
             if (field.isAnnotationPresent(NotificationField.class)) {
                 field.setAccessible(true);
                 String name = field.getAnnotation(NotificationField.class).value();
-                field.set(notification, map.get(name));
+                if (map.containsKey(name)) {
+                    field.set(notification, map.get(name));
+                }
             }
         }
 
