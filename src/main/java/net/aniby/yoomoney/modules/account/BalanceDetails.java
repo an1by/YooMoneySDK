@@ -3,9 +3,11 @@ package net.aniby.yoomoney.modules.account;
 import com.google.gson.annotations.SerializedName;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.ToString;
 
 @AllArgsConstructor
 @Getter
+@ToString
 public class BalanceDetails {
     @SerializedName("total")
     private final double total;

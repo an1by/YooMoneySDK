@@ -17,29 +17,29 @@ import java.util.Objects;
 public class IncomingNotification {
     // HTTP / HTTPS
     @NotificationField("notification_type")
-    private String notificationType;
+    public String notificationType;
     @NotificationField("operation_id")
-    private String operationId;
+    public String operationId;
     @NotificationField("amount")
-    private double amount;
+    public double amount;
     @NotificationField("withdraw_amount")
-    private double withdrawAmount;
+    public double withdrawAmount;
     @NotificationField("currency")
-    private String currency;
+    public String currency;
     @NotificationField("datetime")
-    private String datetime;
+    public String datetime;
     @NotificationField("sender")
-    private String sender;
+    public String sender;
     @NotificationField("codepro")
-    private boolean codePro = false;
+    public boolean codePro = false;
     @NotificationField("label")
-    private String label = "";
+    public String label = "";
     @NotificationField("sha1_hash")
-    private String sha1Hash;
+    public String sha1Hash;
     @NotificationField("test_notification")
-    private boolean testNotification = false;
+    public boolean testNotification = false;
     @NotificationField("unaccepted")
-    private boolean unaccepted = false;
+    public boolean unaccepted = false;
 
     // Only HTTPS
     @NotificationField("lastname")
@@ -88,12 +88,26 @@ public class IncomingNotification {
             if (field.isAnnotationPresent(NotificationField.class)) {
                 field.setAccessible(true);
                 String name = field.getAnnotation(NotificationField.class).value();
-                if (map.containsKey(name)) {
-                    field.set(notification, map.get(name));
+
+                Class<?> type = field.getType();
+                if (map.containsKey(name) && !map.get(name).isEmpty()) {
+                    String value = map.get(name);
+                    if (type == boolean.class)
+                        field.set(notification, Boolean.parseBoolean(value));
+                    else if (type == double.class)
+                        field.set(notification, Double.parseDouble(value));
+                    else if (type == String.class)
+                        field.set(notification, value);
+                } else {
+                    if (type == boolean.class)
+                        field.set(notification, false);
+                    else if (type == double.class)
+                        field.set(notification, 0);
+                    else if (type == String.class)
+                        field.set(notification, "");
                 }
             }
         }
-
         return notification;
     }
 }

@@ -8,6 +8,7 @@ import com.google.gson.annotations.SerializedName;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +16,7 @@ import java.util.List;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
 public class OperationHistory {
     @SerializedName("error")
     private String error;
@@ -39,12 +41,5 @@ public class OperationHistory {
             operations.add(new Gson().fromJson(object, Operation.class));
         }
         return operations;
-    }
-
-    @Override
-    public String toString() {
-        return "OperationHistoryObject{" +
-                "operations=" + operations +
-                '}';
     }
 }

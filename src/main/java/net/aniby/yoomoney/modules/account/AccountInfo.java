@@ -3,11 +3,13 @@ package net.aniby.yoomoney.modules.account;
 import com.google.gson.annotations.SerializedName;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.ToString;
 
 import java.util.List;
 
 @AllArgsConstructor
 @Getter
+@ToString
 public class AccountInfo {
     @SerializedName("account")
     private final String account;

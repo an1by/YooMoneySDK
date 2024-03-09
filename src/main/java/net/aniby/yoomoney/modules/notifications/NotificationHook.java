@@ -3,16 +3,14 @@ package net.aniby.yoomoney.modules.notifications;
 import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
-import org.apache.commons.codec.binary.StringUtils;
 
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.net.MalformedURLException;
-import java.net.URL;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
-import java.util.*;
+import java.util.Arrays;
+import java.util.Map;
+import java.util.Objects;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
@@ -29,7 +27,6 @@ public class NotificationHook implements HttpHandler {
         String decoded = URLDecoder.decode(url, StandardCharsets.UTF_8).replace("http://localhost/", "");
         return Arrays.stream(decoded.split("&"))
                 .map(s -> s.split("=", 2))
-                .filter(e -> e.length == 2)
                 .collect(Collectors.toMap(
                         e -> e[0], e -> e[1]
                 ));
@@ -51,8 +48,10 @@ public class NotificationHook implements HttpHandler {
         try {
             Map<String, String> body = toMap(stream);
             consumer.accept(IncomingNotification.get(body));
-        } catch (IllegalAccessException | MalformedURLException e) {
-            throw new RuntimeException(e);
+
+            exchange.sendResponseHeaders(200, 0);
+        } catch (IllegalAccessException | IOException e) {
+            e.printStackTrace();
         }
     }
 }
