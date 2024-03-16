@@ -5,15 +5,15 @@ import lombok.Getter;
 
 @Builder
 @Getter
-public class P2PPaymentRequest extends MethodRequest {
+public class ToAccountPaymentRequest extends MethodRequest {
     @BodyRequestField("pattern_id")
     private final String patternId = "p2p";
     @BodyRequestField("to")
     private String to;
     @BodyRequestField("amount")
-    private boolean amount;
+    private double amount;
     @BodyRequestField("amount_due")
-    private boolean amountDue;
+    private double amountDue;
     @BodyRequestField("comment")
     private String comment;
     @BodyRequestField("message")

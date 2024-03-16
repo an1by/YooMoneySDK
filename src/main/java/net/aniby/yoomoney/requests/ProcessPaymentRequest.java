@@ -1,19 +1,33 @@
 package net.aniby.yoomoney.requests;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-@AllArgsConstructor
 @Getter
 public class ProcessPaymentRequest extends MethodRequest{
     @BodyRequestField("request_id")
-    private String requestId;
+    private final String requestId;
     @BodyRequestField("money_source")
-    private String moneySource;
+    private final String moneySource;
     @BodyRequestField("csc")
-    private String CSC;
+    private final String CSC;
     @BodyRequestField("ext_auth_success_uri")
-    private String extAuthSuccessURI;
+    private final String extAuthSuccessURI;
     @BodyRequestField("ext_auth_fail_uri")
-    private String extAuthFailURI;
+    private final String extAuthFailURI;
+
+    public ProcessPaymentRequest(String requestId, String moneySource, String csc, String extAuthSuccessURI, String extAuthFailURI) {
+        this.requestId = requestId;
+        this.moneySource = moneySource;
+        this.CSC = csc;
+        this.extAuthSuccessURI = extAuthSuccessURI;
+        this.extAuthFailURI = extAuthFailURI;
+    }
+
+    public ProcessPaymentRequest(String requestId) {
+        this.requestId = requestId;
+        this.moneySource = "wallet";
+        this.CSC = null;
+        this.extAuthSuccessURI = null;
+        this.extAuthFailURI = null;
+    }
 }

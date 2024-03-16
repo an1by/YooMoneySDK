@@ -26,6 +26,7 @@ public class IncomingNotification {
     public double withdrawAmount;
     @NotificationField("currency")
     public String currency;
+    //       DateTimeFormatter.ofPattern("yyyy-MM-dd'T'hh:mm:ss'Z'");
     @NotificationField("datetime")
     public String datetime;
     @NotificationField("sender")

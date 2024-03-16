@@ -7,7 +7,7 @@ import java.util.HashMap;
 
 @Builder
 @Getter
-public class ShopPaymentRequest extends MethodRequest {
+public class MerchantPaymentRequest extends MethodRequest {
     @BodyRequestField("pattern_id")
     private final String patternId = "scid";
     @BodyRequestField("formObjectMap")

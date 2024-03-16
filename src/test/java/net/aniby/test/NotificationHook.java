@@ -1,8 +1,9 @@
-package net.aniby.yoomoney.modules.notifications;
+package net.aniby.test;
 
 import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
+import net.aniby.yoomoney.modules.notifications.IncomingNotification;
 
 import java.io.*;
 import java.net.MalformedURLException;
